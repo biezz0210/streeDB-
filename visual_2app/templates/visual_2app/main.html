@@ -63,20 +63,24 @@
         </form>
     </div>
 
+    <div style="text-align: center;">
+        <h1>{{query}}</h1>
+    </div>
+    {% for x in csv_files %}
     <script>
 
 
         var labels = true; // show the text labels beside individual boxplots?
 
         var margin = {top: 30, right: 50, bottom: 70, left: 50};
-        var  width = 1800 - margin.left - margin.right;
+        var  width = 500 - margin.left - margin.right;
         var height = 500 - margin.top - margin.bottom;
             
         var min = Infinity,
             max = -Infinity;
             
         // parse in the data	
-        d3.csv('{{csv_file}}', function(error, csv) {
+        d3.csv('/static/{{x}}.csv', function(error, csv) {
             // using an array of arrays with
             // data[n][2] 
             // where n = number of columns in the csv file 
@@ -175,7 +179,7 @@
                 .attr("text-anchor", "middle")  
                 .style("font-size", "14px") 
                 //.style("text-decoration", "underline")  
-                .text("{{query}}");
+                .text("{{x}}");
          
              // draw y axis
             svg.append("g")
@@ -223,6 +227,8 @@
         }
 
     </script>
+
+    {% endfor %}
 
 </body>
 </html>
