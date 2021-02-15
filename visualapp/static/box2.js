@@ -1,7 +1,7 @@
 (function() {
 
     // Inspired by http://informationandvisualization.de/blog/box-plot
-    d3.box = function() {
+    d3.box2 = function() {
       var width = 1,
           height = 1,
           duration = 0,
@@ -12,18 +12,21 @@
           showLabels = true, // whether or not to show text labels
           numBars = 4,
           curBar = 1,
-          tickFormat = null;
+          tickFormat = null,
+          group = null;
     
       // For each small multiple…
-      function box(g) {
+      function box2(g) {
         g.each(function(data, i) {
           //d = d.map(value).sort(d3.ascending);
           //var boxIndex = data[0];
           //var boxIndex = 1;
-          var d = data[1].sort(d3.ascending);
           
-         // console.log(boxIndex); 
-          //console.log(d); 
+         // var d = data[1].sort(d3.ascending);
+         //console.log(data)
+            var d = data.value.sort(d3.ascending);
+         //console.log("************"); 
+         //console.log(d); 
           
           var g = d3.select(this),
               n = d.length,
@@ -99,6 +102,7 @@
     
           box.enter().append("rect")
               .attr("class", "box")
+              .style("fill", color(data.group)) //"yellowgreen")
               .attr("x", 0)
               .attr("y", function(d) { return x0(d[2]); })
               .attr("width", width)
@@ -169,10 +173,13 @@
     
           outlier.enter().insert("circle", "text")
               .attr("class", "outlier")
-              .attr("r", 5)
+              .attr("r", 3)
               .attr("cx", width / 2)
               .attr("cy", function(i) { return x0(d[i]); })
               .style("opacity", 1e-6)
+              .on("mouseover", function(d) {      
+                console.log(d)
+                })  
             .transition()
               .duration(duration)
               .attr("cy", function(i) { return x1(d[i]); })
@@ -248,61 +255,61 @@
         d3.timer.flush();
       }
     
-      box.width = function(x) {
+      box2.width = function(x) {
         if (!arguments.length) return width;
         width = x;
-        return box;
+        return box2;
       };
     
-      box.height = function(x) {
+      box2.height = function(x) {
         if (!arguments.length) return height;
         height = x;
-        return box;
+        return box2;
       };
     
-      box.tickFormat = function(x) {
+      box2.tickFormat = function(x) {
         if (!arguments.length) return tickFormat;
         tickFormat = x;
-        return box;
+        return box2;
       };
     
-      box.duration = function(x) {
+      box2.duration = function(x) {
         if (!arguments.length) return duration;
         duration = x;
-        return box;
+        return box2;
       };
     
-      box.domain = function(x) {
+      box2.domain = function(x) {
         if (!arguments.length) return domain;
         domain = x == null ? x : d3.functor(x);
-        return box;
+        return box2;
       };
     
-      box.value = function(x) {
+      box2.value = function(x) {
         if (!arguments.length) return value;
         value = x;
-        return box;
+        return box2;
       };
     
-      box.whiskers = function(x) {
+      box2.whiskers = function(x) {
         if (!arguments.length) return whiskers;
         whiskers = x;
-        return box;
+        return box2;
       };
       
-      box.showLabels = function(x) {
+      box2.showLabels = function(x) {
         if (!arguments.length) return showLabels;
         showLabels = x;
-        return box;
+        return box2;
       };
     
-      box.quartiles = function(x) {
+      box2.quartiles = function(x) {
         if (!arguments.length) return quartiles;
         quartiles = x;
-        return box;
+        return box2;
       };
     
-      return box;
+      return box2;
     };
     
     function boxWhiskers(d) {
@@ -317,4 +324,4 @@
       ];
     }
     
-    })();
+})();
