@@ -41,8 +41,8 @@ def mainview(request):
 
     # treat_tissue = [x+'/'+y for x,y in zip(treat_list, tissue_list)]
 
-    data = [[x,y,z] for x,y,z in zip(tissue_ix, treat_list, tpm)]
-    df = pd.DataFrame(data, columns = ['Group', 'x', 'y'])
+    data = [[x,y,z] for x,y,z in zip(tissue_list, treat_list, tpm)]
+    df = pd.DataFrame(data, columns = ['x', 'Group', 'y'])
     # df_sort = df.sort_values(by=['tissue', 'treatment'])
 
     result = df.to_json(orient="records")

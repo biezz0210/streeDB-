@@ -26,7 +26,7 @@
          //console.log(data)
             var d = data.value.sort(d3.ascending);
          //console.log("************"); 
-         //console.log(d); 
+         //console.log(d);
           
           var g = d3.select(this),
               n = d.length,
